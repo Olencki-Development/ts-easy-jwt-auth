@@ -1,0 +1,61 @@
+{
+  "name": "ts-easy-jwt-auth",
+  "version": "1.0.0",
+  "description": "Easy drop in jwt authentication and token renewal",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "format": "prettier --write 'src/**/*.{ts,json}'",
+    "build": "rm -r ./dist && tsc -p ./tsconfig.json",
+    "test": "mocha -r ts-node/register \"tests/setup.ts\" \"tests/**/*.test.ts\"",
+    "test:coverage": "nyc npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Olencki-Development/ts-easy-jwt-auth.git"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.+(ts|json)": [
+      "npm run format"
+    ]
+  },
+  "keywords": [
+    "jwt",
+    "typescript",
+    "ooo",
+    "object oriented programming",
+    "authentication",
+    "auth",
+    "easy jwt"
+  ],
+  "author": "Brian Olencki",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Olencki-Development/ts-easy-jwt-auth/issues"
+  },
+  "homepage": "https://github.com/Olencki-Development/ts-easy-jwt-auth#readme",
+  "devDependencies": {
+    "@types/chai": "^4.2.14",
+    "@types/mocha": "^8.0.3",
+    "@types/sinon": "^9.0.8",
+    "chai": "^4.2.0",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
+    "mocha": "^8.1.3",
+    "nodemon": "^2.0.5",
+    "nyc": "^15.1.0",
+    "prettier": "^2.1.2",
+    "sinon": "^9.2.0",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  },
+  "dependencies": {}
+}
