@@ -1,5 +1,5 @@
 # Easy JWT Auth
-> An easy drop-in authentication system utilizing a JWT system.
+> An easy drop-in authentication system utilizing a JWT access token & refresh token system.
 
 [![NPM Version][npm-image]][npm-url]
 [![Downloads Stats][npm-downloads]][npm-url]
@@ -14,7 +14,7 @@ npm install ts-easy-jwt-auth --save
 
 ## Usage example
 
-Coming soon...
+Easy JWT Auth contains a single class that should be instantiated once for each auth system. This will store the access and refresh tokens in memory and handle all user options.
 
 See [docs/](https://github.com/Olencki-Development/ts-easy-jwt-auth/tree/main/docs) for documentation of each component and advanced usage.
 
