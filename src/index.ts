@@ -1,1 +1,1 @@
-export {}
+export { EasyJWTAuth } from './EasyJWTAuth'
