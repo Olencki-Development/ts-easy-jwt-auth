@@ -25,8 +25,8 @@ const defaultGetUserForUsername: GetUserForUsernameCallback = () => {
 export class EasyJWTAuth implements IEasyJWTAuth {
   options: EasyJWTAuthOptions
 
-  protected getUserForUsername: GetUserForUsernameCallback = defaultGetUserForUsername
-  protected tokens: Record<
+  protected _getUserForUsername: GetUserForUsernameCallback = defaultGetUserForUsername
+  protected _tokens: Record<
     JsonWebToken,
     JsonWebToken
   > = {} /* refreshToken -> accessToken */
@@ -51,7 +51,7 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     const refreshToken = this._getRefreshToken(username, _role)
     const accessToken = this._getAccessToken(username, _role)
 
-    this.tokens[refreshToken] = accessToken
+    this._tokens[refreshToken] = accessToken
 
     return {
       userInfo: {
@@ -69,7 +69,7 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     username: Username,
     password: Password
   ): Promise<LoginReturnValue> {
-    const user = await this.getUserForUsername(username)
+    const user = await this._getUserForUsername(username)
 
     const matches = await bcrypt.compare(password, user.hash)
     if (!matches) {
@@ -79,7 +79,7 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     const refreshToken = this._getRefreshToken(username, user.role)
     const accessToken = this._getAccessToken(username, user.role)
 
-    this.tokens[refreshToken] = accessToken
+    this._tokens[refreshToken] = accessToken
 
     return {
       tokens: {
@@ -90,7 +90,7 @@ export class EasyJWTAuth implements IEasyJWTAuth {
   }
 
   async refresh(refreshToken: JsonWebToken): Promise<LoginReturnValue> {
-    const existingAccessToken = this.tokens[refreshToken]
+    const existingAccessToken = this._tokens[refreshToken]
     if (!existingAccessToken) {
       throw new ForbiddenError()
     }
@@ -102,7 +102,7 @@ export class EasyJWTAuth implements IEasyJWTAuth {
 
     const accessToken = this._getAccessToken(payload.username, payload.role)
 
-    this.tokens[refreshToken] = accessToken
+    this._tokens[refreshToken] = accessToken
 
     return {
       tokens: {
@@ -113,7 +113,7 @@ export class EasyJWTAuth implements IEasyJWTAuth {
   }
 
   logout(accessToken: JsonWebToken): void {
-    const item = Object.entries(this.tokens).find(([_, access]) => {
+    const item = Object.entries(this._tokens).find(([_, access]) => {
       return access === accessToken
     })
 
@@ -123,14 +123,14 @@ export class EasyJWTAuth implements IEasyJWTAuth {
 
     const refreshToken = item[0]
 
-    delete this.tokens[refreshToken]
+    delete this._tokens[refreshToken]
   }
 
   async validate(
     accessToken: JsonWebToken,
     acceptedRoles: Roles = []
   ): Promise<AuthReturnValue> {
-    const item = Object.entries(this.tokens).find(([_, access]) => {
+    const item = Object.entries(this._tokens).find(([_, access]) => {
       return access === accessToken
     })
 
@@ -158,11 +158,11 @@ export class EasyJWTAuth implements IEasyJWTAuth {
       throw new ForbiddenError()
     }
 
-    return this.getUserForUsername(payload.username)
+    return this._getUserForUsername(payload.username)
   }
 
   onRequestUserForUsername(cb: GetUserForUsernameCallback): void {
-    this.getUserForUsername = cb
+    this._getUserForUsername = cb
   }
 
   protected _getAccessToken(username: Username, role: Role): string {

@@ -13,8 +13,8 @@ import {
 import { IEasyJWTAuth } from './interfaces/IEasyJWTAuth'
 export declare class EasyJWTAuth implements IEasyJWTAuth {
   options: EasyJWTAuthOptions
-  protected getUserForUsername: GetUserForUsernameCallback
-  protected tokens: Record<JsonWebToken, JsonWebToken>
+  protected _getUserForUsername: GetUserForUsernameCallback
+  protected _tokens: Record<JsonWebToken, JsonWebToken>
   constructor(options: EasyJWTAuthOptions)
   register(
     username: Username,
