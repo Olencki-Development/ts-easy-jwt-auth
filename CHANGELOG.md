@@ -14,7 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 * Have InvalidRoleError extend ForbiddenError to return same information
 * Login method returns the user
-* Change time expiration to number in seconds vs string
+* Time expiration to number in seconds vs string
+* Validate method returns tokens and user
 
 ## [1.0.0] - 2020-12-14
 ### Added

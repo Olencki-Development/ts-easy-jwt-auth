@@ -177,7 +177,14 @@ export class EasyJWTAuth implements IEasyJWTAuth {
       throw new ForbiddenError()
     }
 
-    return this._getUserForUsername(payload.username)
+    const user = await this._getUserForUsername(payload.username)
+    return {
+      user,
+      tokens: {
+        access: item[0],
+        refresh: item[1]
+      }
+    }
   }
 
   onRequestUserForUsername(cb: GetUserForUsernameCallback): void {

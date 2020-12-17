@@ -59,9 +59,13 @@ describe('src/EasyJWTAuth::validate', function () {
     return instance
       .validate(tokens.access)
       .then((result) => {
-        this.assert.hasAllKeys(result, ['hash', 'role'])
-        this.assert.isString(result.hash)
-        this.assert.isString(result.role)
+        this.assert.hasAllKeys(result, ['user', 'tokens'])
+        this.assert.hasAllKeys(result.tokens, ['access', 'refresh'])
+        this.assert.isString(result.tokens.access)
+        this.assert.isString(result.tokens.refresh)
+        this.assert.hasAllKeys(result.user, ['hash', 'role'])
+        this.assert.isString(result.user.hash)
+        this.assert.isString(result.user.role)
       })
       .catch((error) => {
         this.assert.isNull(error)
@@ -72,9 +76,13 @@ describe('src/EasyJWTAuth::validate', function () {
     return instance
       .validate(`Bearer ${tokens.access}`)
       .then((result) => {
-        this.assert.hasAllKeys(result, ['hash', 'role'])
-        this.assert.isString(result.hash)
-        this.assert.isString(result.role)
+        this.assert.hasAllKeys(result, ['user', 'tokens'])
+        this.assert.hasAllKeys(result.tokens, ['access', 'refresh'])
+        this.assert.isString(result.tokens.access)
+        this.assert.isString(result.tokens.refresh)
+        this.assert.hasAllKeys(result.user, ['hash', 'role'])
+        this.assert.isString(result.user.hash)
+        this.assert.isString(result.user.role)
       })
       .catch((error) => {
         console.log(error)
@@ -86,9 +94,13 @@ describe('src/EasyJWTAuth::validate', function () {
     return instance
       .validate(tokens.access, ['user'])
       .then((result) => {
-        this.assert.hasAllKeys(result, ['hash', 'role'])
-        this.assert.isString(result.hash)
-        this.assert.isString(result.role)
+        this.assert.hasAllKeys(result, ['user', 'tokens'])
+        this.assert.hasAllKeys(result.tokens, ['access', 'refresh'])
+        this.assert.isString(result.tokens.access)
+        this.assert.isString(result.tokens.refresh)
+        this.assert.hasAllKeys(result.user, ['hash', 'role'])
+        this.assert.isString(result.user.hash)
+        this.assert.isString(result.user.role)
       })
       .catch((error) => {
         this.assert.isNull(error)

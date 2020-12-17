@@ -49,4 +49,4 @@ export type RefreshReturnValue = {
   }
 }
 
-export type AuthReturnValue = UserType
+export type AuthReturnValue = LoginReturnValue
