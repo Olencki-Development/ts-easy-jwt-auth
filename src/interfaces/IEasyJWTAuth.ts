@@ -36,6 +36,11 @@ export interface IEasyJWTAuth {
   logout(accessToken: JsonWebToken): void
 
   forgotPassword(username: Username): Promise<ForgotPasswordReturnValue>
+  forgotPasswordUpdate(
+    username: Username,
+    newPassword: Password,
+    passwordResetToken: JsonWebToken
+  ): void
 
   refresh(refreshToken: JsonWebToken): Promise<RefreshReturnValue>
 

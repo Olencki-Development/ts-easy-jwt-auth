@@ -58,4 +58,8 @@ export type ForgotPasswordReturnValue = {
   }
 }
 
+export type ForgotPasswordUpdateReturnValue = {
+  user: UserType
+}
+
 export type AuthReturnValue = LoginReturnValue

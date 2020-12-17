@@ -10,7 +10,9 @@ import {
   LoginReturnValue,
   RefreshReturnValue,
   ForgotPasswordReturnValue,
+  ForgotPasswordUpdateReturnValue,
   Password,
+  PasswordHash,
   Username,
   Role,
   Roles,
@@ -54,8 +56,7 @@ export class EasyJWTAuth implements IEasyJWTAuth {
       throw new DuplicateUserError()
     }
 
-    const saltRounds = this.options.saltRounds || 10
-    const hash = await bcrypt.hash(password, saltRounds)
+    const hash = await this._getHash(password)
 
     const _role = role || this.options.roles.default
     if (!this.options.roles.available.includes(_role)) {
@@ -154,6 +155,32 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     }
   }
 
+  async forgotPasswordUpdate(
+    username: Username,
+    newPassword: Password,
+    passwordResetToken: JsonWebToken
+  ): Promise<ForgotPasswordUpdateReturnValue> {
+    const token = this._passwordResetTokens[username]
+    if (!token) {
+      throw new ForbiddenError()
+    }
+
+    if (token !== passwordResetToken) {
+      throw new UnauthorizedError()
+    }
+
+    jwt.verify(token, this.options.secrets.passwordResetToken)
+
+    const user = await this._getUserForUsername(username)
+    user.hash = await this._getHash(newPassword)
+
+    delete this._passwordResetTokens[username]
+
+    return {
+      user
+    }
+  }
+
   async validate(
     accessToken: JsonWebToken,
     acceptedRoles: Roles = []
@@ -245,5 +272,11 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     )
 
     return passwordResetToken
+  }
+
+  protected async _getHash(password: Password): Promise<PasswordHash> {
+    const saltRounds = this.options.saltRounds || 10
+    const hash = await bcrypt.hash(password, saltRounds)
+    return hash
   }
 }
