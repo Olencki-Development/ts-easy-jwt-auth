@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Check for register to see if user already exists
 * Easier way import custom errors
 * Support for passing entire header into validate
+* Add forgot password method to request the reset of a users password
 
 ### Changed
 * Have InvalidRoleError extend ForbiddenError to return same information

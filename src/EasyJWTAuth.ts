@@ -9,6 +9,7 @@ import {
   RegisterReturnValue,
   LoginReturnValue,
   RefreshReturnValue,
+  ForgotPasswordReturnValue,
   Password,
   Username,
   Role,
@@ -32,6 +33,7 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     JsonWebToken,
     JsonWebToken
   > = {} /* refreshToken -> accessToken */
+  protected _passwordResetTokens: Record<Username, JsonWebToken> = {}
 
   constructor(options: EasyJWTAuthOptions) {
     this.options = options
@@ -139,6 +141,19 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     delete this._tokens[refreshToken]
   }
 
+  async forgotPassword(username: Username): Promise<ForgotPasswordReturnValue> {
+    const user = await this._getUserForUsername(username)
+    const resetToken = this._getPasswordResetToken()
+    this._passwordResetTokens[username] = resetToken
+
+    return {
+      user,
+      tokens: {
+        passwordReset: resetToken
+      }
+    }
+  }
+
   async validate(
     accessToken: JsonWebToken,
     acceptedRoles: Roles = []
@@ -217,5 +232,18 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     )
 
     return refreshToken
+  }
+
+  protected _getPasswordResetToken(): string {
+    const expiresIn = this.options.passwordResetTokenExpiresInMinutes || 10
+    const passwordResetToken = jwt.sign(
+      {},
+      this.options.secrets.passwordResetToken,
+      {
+        expiresIn: expiresIn * 60 // convert minutes to seconds
+      }
+    )
+
+    return passwordResetToken
   }
 }

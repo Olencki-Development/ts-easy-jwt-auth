@@ -13,7 +13,8 @@ describe('src/EasyJWTAuth::register', function () {
       },
       secrets: {
         accessToken: 'my-access-secret',
-        refreshToken: 'my-refresh-secret'
+        refreshToken: 'my-refresh-secret',
+        passwordResetToken: 'my-reset-token'
       }
     })
   })

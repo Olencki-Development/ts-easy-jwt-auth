@@ -4,7 +4,7 @@ import UnauthorizedError from '../../src/errors/UnauthorizedError'
 describe('src/EasyJWTAuth::login', function () {
   let instance: EasyJWTAuth
 
-  before(async function () {
+  beforeEach(async function () {
     instance = new EasyJWTAuth({
       roles: {
         available: ['user', 'admin'],
@@ -12,7 +12,8 @@ describe('src/EasyJWTAuth::login', function () {
       },
       secrets: {
         accessToken: 'my-access-secret',
-        refreshToken: 'my-refresh-secret'
+        refreshToken: 'my-refresh-secret',
+        passwordResetToken: 'my-reset-token'
       }
     })
     const registerResult = await instance.register('username', 'password')

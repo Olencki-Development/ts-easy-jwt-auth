@@ -7,8 +7,10 @@ export type EasyJWTAuthOptions = {
   secrets: {
     accessToken: string
     refreshToken: string
+    passwordResetToken: string
   }
   accessTokenExpiresInMinutes?: number
+  passwordResetTokenExpiresInMinutes?: number
 }
 
 export type Username = string
@@ -46,6 +48,13 @@ export type RefreshReturnValue = {
   tokens: {
     refresh: JsonWebToken
     access: JsonWebToken
+  }
+}
+
+export type ForgotPasswordReturnValue = {
+  user: UserType
+  tokens: {
+    passwordReset: JsonWebToken
   }
 }
 

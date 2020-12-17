@@ -9,7 +9,8 @@ describe('src/EasyJWTAuth::constructor', function () {
       },
       secrets: {
         accessToken: 'my-access-secret',
-        refreshToken: 'my-refresh-secret'
+        refreshToken: 'my-refresh-secret',
+        passwordResetToken: 'my-reset-token'
       }
     })
 
@@ -21,7 +22,8 @@ describe('src/EasyJWTAuth::constructor', function () {
       },
       secrets: {
         accessToken: 'my-access-secret',
-        refreshToken: 'my-refresh-secret'
+        refreshToken: 'my-refresh-secret',
+        passwordResetToken: 'my-reset-token'
       }
     })
     this.assert.deepEqual(instance['_tokens'], {})

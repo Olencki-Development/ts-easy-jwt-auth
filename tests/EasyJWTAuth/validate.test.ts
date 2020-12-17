@@ -8,7 +8,7 @@ describe('src/EasyJWTAuth::validate', function () {
     access: string
   }
 
-  before(async function () {
+  beforeEach(async function () {
     instance = new EasyJWTAuth({
       roles: {
         available: ['user', 'admin'],
@@ -16,7 +16,8 @@ describe('src/EasyJWTAuth::validate', function () {
       },
       secrets: {
         accessToken: 'my-access-secret',
-        refreshToken: 'my-refresh-secret'
+        refreshToken: 'my-refresh-secret',
+        passwordResetToken: 'my-reset-token'
       }
     })
     const registerResult = await instance.register('username', 'password')
