@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class DuplicateUserError extends Error {
+    constructor() {
+        super('User already exists.');
+        this.name = this.constructor.name;
+        this.statusCode = 400;
+    }
+}
+exports.default = DuplicateUserError;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRHVwbGljYXRlVXNlckVycm9yLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL2Vycm9ycy9EdXBsaWNhdGVVc2VyRXJyb3IudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFFQSxNQUFxQixrQkFDbkIsU0FBUSxLQUFLO0lBSWI7UUFDRSxLQUFLLENBQUMsc0JBQXNCLENBQUMsQ0FBQTtRQUU3QixJQUFJLENBQUMsSUFBSSxHQUFHLElBQUksQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFBO1FBQ2pDLElBQUksQ0FBQyxVQUFVLEdBQUcsR0FBRyxDQUFBO0lBQ3ZCLENBQUM7Q0FDRjtBQVhELHFDQVdDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgSUVhc3lKV1RBdXRoRXJyb3IgfSBmcm9tICcuLi9pbnRlcmZhY2VzL0lFYXN5SldUQXV0aEVycm9yJ1xuXG5leHBvcnQgZGVmYXVsdCBjbGFzcyBEdXBsaWNhdGVVc2VyRXJyb3JcbiAgZXh0ZW5kcyBFcnJvclxuICBpbXBsZW1lbnRzIElFYXN5SldUQXV0aEVycm9yIHtcbiAgc3RhdHVzQ29kZTogbnVtYmVyXG5cbiAgY29uc3RydWN0b3IoKSB7XG4gICAgc3VwZXIoJ1VzZXIgYWxyZWFkeSBleGlzdHMuJylcblxuICAgIHRoaXMubmFtZSA9IHRoaXMuY29uc3RydWN0b3IubmFtZVxuICAgIHRoaXMuc3RhdHVzQ29kZSA9IDQwMFxuICB9XG59XG4iXX0=

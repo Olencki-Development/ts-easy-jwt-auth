@@ -4,6 +4,7 @@ import {
   LoginReturnValue,
   RefreshReturnValue,
   ForgotPasswordReturnValue,
+  ForgotPasswordUpdateReturnValue,
   Password,
   Username,
   Role,
@@ -40,7 +41,7 @@ export interface IEasyJWTAuth {
     username: Username,
     newPassword: Password,
     passwordResetToken: JsonWebToken
-  ): void
+  ): Promise<ForgotPasswordUpdateReturnValue>
 
   refresh(refreshToken: JsonWebToken): Promise<RefreshReturnValue>
 

@@ -1,3 +1,2 @@
-export default class InvalidRoleError extends Error {
-  constructor()
-}
+import ForbiddenError from './ForbiddenError'
+export default class InvalidRoleError extends ForbiddenError {}

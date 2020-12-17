@@ -13,7 +13,9 @@ ReduxProcessGroup is a class that should be instantiated. It takes an `options` 
   * `secrets` - The secrets object contains a few required keys that dictate the JWT secrets.
     * `accessToken` - The secret used for signing the access token.
     * `refreshToken` - The secret used for signing the refresh token.
+    * `passwordResetToken` - The secret used for signing the password reset token.
   * `accessTokenExpiresInMinutes` - An optional parameter that indicates number of minutes that an access token will be valid for. (Default 90)
+  * `passwordResetTokenExpiresInMinutes` - An optional parameter that indicates number of minutes that a password reset token will be valid for. (Default 10)
 
 ### Methods
 
@@ -42,6 +44,16 @@ refresh(refreshToken: JsonWebToken): Promise<LoginReturnValue>
 logout(accessToken: JsonWebToken): void
 ```
   * This method should be called a user's refresh and access tokens should be invalidated. They are removed from the list of available tokens.
+
+```typescript
+forgotPassword(username: Username): Promise<ForgotPasswordReturnValue>
+```
+  * This method should be called when a user has forgotten their password and wants to reset it. A code is generated and returned for the user. This code should be sent to the user for subsequent password reset validation.
+
+```typescript
+forgotPasswordUpdate(username: Username, newPassword: Password, passwordResetToken: JsonWebToken): Promise<ForgotPasswordUpdateReturnValue>
+```
+  * This method should be called when a user is attempting to reset their password. The previously generated reset token is provided, validated, and checked against the user. If it is correct and valid, the token is deleted and the new password is hashed and assigned to the user object. The user object is then returned.
 
 ```typescript
 validate(accessToken: JsonWebToken, acceptedRoles: Roles = []): Promise<AuthReturnValue>
