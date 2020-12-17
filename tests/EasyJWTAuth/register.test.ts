@@ -1,10 +1,11 @@
 import { EasyJWTAuth } from '../../src/EasyJWTAuth'
 import InvalidRoleError from '../../src/errors/InvalidRoleError'
+import DuplicateUserError from '../../src/errors/DuplicateUserError'
 
 describe('src/EasyJWTAuth::register', function () {
   let instance: EasyJWTAuth
 
-  before(function () {
+  beforeEach(function () {
     instance = new EasyJWTAuth({
       roles: {
         available: ['user', 'admin'],
@@ -27,6 +28,26 @@ describe('src/EasyJWTAuth::register', function () {
       })
       .catch((error) => {
         this.assert.instanceOf(error, InvalidRoleError)
+      })
+  })
+
+  it('should throw error if user already exists', async function () {
+    instance.onRequestUserForUsername(async (username) => {
+      return {
+        username,
+        role: 'user',
+        hash: 'asdf'
+      }
+    })
+    return instance
+      .register('my-user', 'my-pass')
+      .then(() => {
+        this.assert.isNull(
+          'Failed to throw an error. Should not have made it here.'
+        )
+      })
+      .catch((error) => {
+        this.assert.instanceOf(error, DuplicateUserError)
       })
   })
 

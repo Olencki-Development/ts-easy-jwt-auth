@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import UnauthorizedError from './errors/UnauthorizedError'
 import ForbiddenError from './errors/ForbiddenError'
+import DuplicateUserError from './errors/DuplicateUserError'
 import InvalidRoleError from './errors/InvalidRoleError'
 import {
   EasyJWTAuthOptions,
@@ -40,6 +41,16 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     password: Password,
     role?: Role
   ): Promise<RegisterReturnValue> {
+    let existingUser
+    try {
+      existingUser = await this._getUserForUsername(username)
+    } catch (_) {
+      // no-opt
+    }
+    if (existingUser) {
+      throw new DuplicateUserError()
+    }
+
     const saltRounds = this.options.saltRounds || 10
     const hash = await bcrypt.hash(password, saltRounds)
 

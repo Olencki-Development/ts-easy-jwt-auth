@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.0] - 2020-12-17
 ### Added
 * StatusCode to errors
+* Check for register to see if user already exists
 * Easier way import custom errors
 
 ### Changed
