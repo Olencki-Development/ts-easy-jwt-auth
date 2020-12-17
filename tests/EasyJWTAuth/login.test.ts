@@ -41,7 +41,7 @@ describe('src/EasyJWTAuth::login', function () {
     return instance
       .login('username', 'password')
       .then((result) => {
-        this.assert.hasAllKeys(result, ['tokens'])
+        this.assert.hasAllKeys(result, ['tokens', 'user'])
         this.assert.hasAllKeys(result.tokens, ['refresh', 'access'])
         this.assert.isString(result.tokens.access)
         this.assert.isString(result.tokens.refresh)

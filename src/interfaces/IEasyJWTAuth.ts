@@ -2,6 +2,7 @@ import {
   EasyJWTAuthOptions,
   RegisterReturnValue,
   LoginReturnValue,
+  RefreshReturnValue,
   Password,
   Username,
   Role,
@@ -33,7 +34,7 @@ export interface IEasyJWTAuth {
 
   logout(accessToken: JsonWebToken): void
 
-  refresh(refreshToken: JsonWebToken): Promise<LoginReturnValue>
+  refresh(refreshToken: JsonWebToken): Promise<RefreshReturnValue>
 
   onRequestUserForUsername(cb: GetUserForUsernameCallback): void
 }

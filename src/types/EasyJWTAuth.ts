@@ -31,18 +31,18 @@ export type GetUserForUsernameCallback = (
   username: Username
 ) => Promise<UserType>
 
-export type RegisterReturnValue = {
+export type RegisterReturnValue = RefreshReturnValue & {
   userInfo: {
     hash: PasswordHash
     role: Role
   }
-  tokens: {
-    refresh: JsonWebToken
-    access: JsonWebToken
-  }
 }
 
-export type LoginReturnValue = {
+export type LoginReturnValue = RefreshReturnValue & {
+  user: UserType
+}
+
+export type RefreshReturnValue = {
   tokens: {
     refresh: JsonWebToken
     access: JsonWebToken

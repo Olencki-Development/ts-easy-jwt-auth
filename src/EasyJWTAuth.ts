@@ -8,6 +8,7 @@ import {
   EasyJWTAuthOptions,
   RegisterReturnValue,
   LoginReturnValue,
+  RefreshReturnValue,
   Password,
   Username,
   Role,
@@ -96,11 +97,12 @@ export class EasyJWTAuth implements IEasyJWTAuth {
       tokens: {
         refresh: refreshToken,
         access: accessToken
-      }
+      },
+      user
     }
   }
 
-  async refresh(refreshToken: JsonWebToken): Promise<LoginReturnValue> {
+  async refresh(refreshToken: JsonWebToken): Promise<RefreshReturnValue> {
     const existingAccessToken = this._tokens[refreshToken]
     if (!existingAccessToken) {
       throw new ForbiddenError()
