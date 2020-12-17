@@ -17,7 +17,8 @@ const auth = new EasyJWTAuth({
   },
   secrets: {
     accessToken: 'my-access-secret',
-    refreshToken: 'my-refresh-secret'
+    refreshToken: 'my-refresh-secret',
+    passwordResetToken: 'my-password-token'
   }
 })
 
