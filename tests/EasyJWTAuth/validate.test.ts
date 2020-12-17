@@ -68,6 +68,20 @@ describe('src/EasyJWTAuth::validate', function () {
       })
   })
 
+  it('should resolve when accessToken is passed as entier header and is found', async function () {
+    return instance
+      .validate(`Bearer ${tokens.access}`)
+      .then((result) => {
+        this.assert.hasAllKeys(result, ['hash', 'role'])
+        this.assert.isString(result.hash)
+        this.assert.isString(result.role)
+      })
+      .catch((error) => {
+        console.log(error)
+        this.assert.isNull(error)
+      })
+  })
+
   it('should resolve when accessToken is found and role is satisfied', async function () {
     return instance
       .validate(tokens.access, ['user'])

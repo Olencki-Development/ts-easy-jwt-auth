@@ -143,8 +143,14 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     accessToken: JsonWebToken,
     acceptedRoles: Roles = []
   ): Promise<AuthReturnValue> {
+    let _accessToken = accessToken
+    if (_accessToken && _accessToken.includes(' ')) {
+      const splitToken = _accessToken.split(' ')
+      _accessToken = splitToken[1]
+    }
+
     const item = Object.entries(this._tokens).find(([_, access]) => {
-      return access === accessToken
+      return access === _accessToken
     })
 
     if (!item) {
@@ -152,7 +158,7 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     }
 
     const payload: JsonWebTokenPayload = jwt.verify(
-      accessToken,
+      _accessToken,
       this.options.secrets.accessToken
     ) as JsonWebTokenPayload
 
@@ -187,7 +193,7 @@ export class EasyJWTAuth implements IEasyJWTAuth {
       },
       this.options.secrets.accessToken,
       {
-        expiresIn: `${expiresIn}m`
+        expiresIn: expiresIn * 60 // convert minutes to seconds
       }
     )
 
