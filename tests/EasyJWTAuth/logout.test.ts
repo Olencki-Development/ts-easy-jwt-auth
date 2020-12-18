@@ -30,13 +30,13 @@ describe('src/EasyJWTAuth::logout', function () {
     })
   })
 
-  it('should throw error if refreshToken is not found', async function () {
+  it('should throw error if accessToken is not found', async function () {
     this.assert.throws(() => {
       instance.logout('invalid-token')
     }, ForbiddenError)
   })
 
-  it('should resolve when refresh token is found', async function () {
+  it('should resolve when accessToken is found', async function () {
     this.assert.lengthOf(Object.keys(instance['_tokens']), 1)
     instance.logout(tokens.access)
     this.assert.lengthOf(Object.keys(instance['_tokens']), 0)

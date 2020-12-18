@@ -223,8 +223,8 @@ export class EasyJWTAuth implements IEasyJWTAuth {
     return {
       user,
       tokens: {
-        access: item[0],
-        refresh: item[1]
+        access: item[1],
+        refresh: item[0]
       }
     }
   }
